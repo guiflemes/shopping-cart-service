@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package shoppingcart;
+
+
+option go_package = "shopping_cart/src/genproto";
+
+service ShoppingCartService {
+    rpc AddItem (AddItemRequest) returns (Cart) {}
+}
+
+message AddItemRequest {
+    string cartId = 1;
+    string itemId =2;
+    int32 quantity =3;
+}
+
+message Cart {
+    repeated Item items = 1;
+}
+
+message Item {
+    string itemId = 1;
+    int32 quantity = 2;
+}
