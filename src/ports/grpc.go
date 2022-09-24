@@ -15,4 +15,6 @@ func NewGrpcServer(application app.Application) grpcServer {
 	return grpcServer{app: application}
 }
 
-func (grpc grpcServer) AddItem(ctx context.Context, request *genproto.AddItemRequest) {}
+func (grpc grpcServer) AddItem(ctx context.Context, request *genproto.AddItemRequest) {
+
+}
