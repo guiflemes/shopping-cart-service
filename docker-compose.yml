@@ -1,18 +1,44 @@
 version: '3.5'
 services:
-  postgres-db:
-    image: postgres:latest
+  shopping_cart:
+    build: .
+    restart: always
     ports:
-      - 5432:5432
+      - 8001:8000
+    depends_on:
+      shopping-cart-db:
+        condition: service_healthy
+    volumes:
+      - .:/app
+    networks:
+      - host
+
+  shopping-cart-db:
+    image: postgres:14.1-alpine
+    ports:
+      - 5437:5432
     environment:
-      POSTGRES_USER: shopping-cart
-      POSTGRES_PASSWORD: shopping-cart
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB_NAME}
+    volumes:
+      - data:/var/lib/postgresql/data
+    restart: always
+
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - host
 
   # this second PostgresSQL is used when running test
-  postgres-db-test:
-    image: postgres:latest
+  shopping-cart-db-test:
+    image: postgres:14.1-alpine
     ports:
-      - 5433:5432
+      - 5438:5432
     environment:
       POSTGRES_DB: shopping-cart
       POSTGRES_USER: shopping-cart
@@ -48,3 +74,10 @@ services:
       - kafka
     environment:
       - TARGETS=kafka:9092
+
+volumes:
+  data:
+
+
+networks:
+  host:

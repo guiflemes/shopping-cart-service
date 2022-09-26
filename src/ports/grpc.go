@@ -19,7 +19,7 @@ func NewGrpcServer(application app.Application) grpcServer {
 }
 
 func (g grpcServer) AddItem(ctx context.Context, request *genproto.AddItemRequest) (*genproto.Cart, error) {
-	if err := g.app.Commands.AddItem.Handle(ctx, command.AddItemCommand{CartId: request.CartId, ItemId: request.ItemId, Quantity: request.Quantity}); err != nil {
+	if err := g.app.Commands.AddItem.Handle(ctx, command.AddItem{CartId: request.CartId, ItemId: request.ItemId, Quantity: request.Quantity}); err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
