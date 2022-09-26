@@ -8,7 +8,11 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-type AddItemCommand struct{}
+type AddItemCommand struct {
+	CartId   string
+	ItemId   string
+	Quantity int32
+}
 
 type AddItemHandler decorator.CommandHandler[AddItemCommand]
 

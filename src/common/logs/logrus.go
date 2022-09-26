@@ -9,11 +9,11 @@ import (
 )
 
 func Init() {
-	setFormatter(logrus.StandardLogger())
+	SetFormatter(logrus.StandardLogger())
 	logrus.SetLevel(logrus.DebugLevel)
 }
 
-func setFormatter(logger *logrus.Logger) {
+func SetFormatter(logger *logrus.Logger) {
 	logger.SetFormatter(&logrus.JSONFormatter{
 		FieldMap: logrus.FieldMap{
 			logrus.FieldKeyTime:  "time",
