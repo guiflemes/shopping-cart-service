@@ -2,3 +2,4 @@
 *.vscode
 *tmp
 commands.MD
+*kafka-1-logs
