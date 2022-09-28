@@ -8,6 +8,7 @@ import (
 	"shopping_cart/src/service"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 func main() {
@@ -19,6 +20,7 @@ func main() {
 	server.RunGrpcServer(func(server *grpc.Server) {
 		svc := ports.NewGrpcServer(application)
 		genproto.RegisterShoppingCartServiceServer(server, svc)
+		reflection.Register(server)
 	})
 
 }
